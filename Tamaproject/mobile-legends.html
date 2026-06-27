@@ -1,0 +1,333 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Top Up Mobile Legends</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:'Segoe UI',sans-serif;
+}
+
+body{
+    background:#0f172a;
+    color:white;
+}
+
+.header{
+    background:#111827;
+    padding:15px 30px;
+}
+
+.header a{
+    color:white;
+    text-decoration:none;
+}
+
+.banner{
+    width:100%;
+    height:300px;
+    overflow:hidden;
+}
+
+.banner img{
+    width:100%;
+    height:100%;
+    object-fit:cover;
+}
+
+.container{
+    max-width:1200px;
+    margin:30px auto;
+    padding:20px;
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:25px;
+}
+
+.card{
+    background:#1e293b;
+    padding:20px;
+    border-radius:15px;
+}
+
+.card h2{
+    margin-bottom:15px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    border:none;
+    border-radius:10px;
+    margin-top:10px;
+}
+
+.diamond-grid{
+    display:grid;
+    grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+    gap:15px;
+}
+
+.diamond{
+    background:#334155;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.diamond:hover{
+    transform:translateY(-5px);
+    background:#2563eb;
+}
+
+.diamond.active{
+    border:2px solid #60a5fa;
+}
+
+.payment-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.payment{
+    background:#334155;
+    padding:15px;
+    border-radius:12px;
+    text-align:center;
+    cursor:pointer;
+    transition:.3s;
+}
+
+.payment:hover{
+    background:#2563eb;
+}
+
+.payment.active{
+    border:2px solid #60a5fa;
+}
+
+.summary p{
+    margin:10px 0;
+}
+
+.buy-btn{
+    width:100%;
+    padding:15px;
+    border:none;
+    border-radius:12px;
+    background:#2563eb;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    margin-top:20px;
+}
+
+.buy-btn:hover{
+    background:#1d4ed8;
+}
+
+@media(max-width:900px){
+
+.container{
+    grid-template-columns:1fr;
+}
+
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+    <a href="index.html"> Kembali ke Beranda</a>
+</div>
+
+<div class="banner">
+
+    <img src="img/ml.jpg" alt="Mobile Legends">
+
+    <div class="banner-overlay">
+        <h1>MOBILE LEGENDS</h1>
+        <p>Top Up Diamond Cepat & Murah</p>
+    </div>
+
+</div>
+
+<div class="container">
+
+    <div>
+
+        <div class="card">
+            <h2>Masukkan Data Akun</h2>
+
+            <input type="text" placeholder="User ID">
+
+            <input type="text" placeholder="Server ID">
+        </div>
+
+        <br>
+
+        <div class="card">
+
+            <h2>Pilih Diamond</h2>
+
+            <div class="diamond-grid">
+
+                <div class="diamond" onclick="pilihDiamond(this,'86 Diamond','Rp20.000')">
+                    86 Diamond<br>
+                    Rp20.000
+                </div>
+
+                <div class="diamond" onclick="pilihDiamond(this,'172 Diamond','Rp40.000')">
+                    172 Diamond<br>
+                    Rp40.000
+                </div>
+
+                <div class="diamond" onclick="pilihDiamond(this,'257 Diamond','Rp60.000')">
+                    257 Diamond<br>
+                    Rp60.000
+                </div>
+
+                <div class="diamond" onclick="pilihDiamond(this,'514 Diamond','Rp120.000')">
+                    514 Diamond<br>
+                    Rp120.000
+                </div>
+
+            </div>
+
+        </div>
+
+        <br>
+
+        <div class="card">
+
+            <h2>Metode Pembayaran</h2>
+
+            <div class="payment-grid">
+
+                <div class="payment" onclick="pilihPayment(this,'QRIS')">
+                📱 QRIS
+                </div>
+
+                <div class="payment" onclick="pilihPayment(this,'DANA')">
+                💙 DANA
+                </div>
+
+                <div class="payment" onclick="pilihPayment(this,'OVO')">
+                🟣 OVO
+                </div>
+
+                <div class="payment" onclick="pilihPayment(this,'GoPay')">
+                🟦 GoPay
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div>
+
+        <div class="card summary">
+
+            <h2>Ringkasan Pesanan</h2>
+
+            <p>Game : Mobile Legends</p>
+
+            <p id="diamondText">
+                Diamond : -
+            </p>
+
+            <p id="hargaText">
+                Harga : -
+            </p>
+
+            <p id="paymentText">
+                Pembayaran : -
+            </p>
+
+            <button class="buy-btn" onclick="checkout()">
+                Bayar Sekarang
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+let diamondDipilih = "";
+let hargaDipilih = "";
+let paymentDipilih = "";
+
+function pilihDiamond(el,nama,harga){
+
+    document
+    .querySelectorAll('.diamond')
+    .forEach(x=>x.classList.remove('active'));
+
+    el.classList.add('active');
+
+    diamondDipilih = nama;
+    hargaDipilih = harga;
+
+    document.getElementById(
+    'diamondText').innerText =
+    'Diamond : ' + nama;
+
+    document.getElementById(
+    'hargaText').innerText =
+    'Harga : ' + harga;
+}
+
+function pilihPayment(el,metode){
+
+    document
+    .querySelectorAll('.payment')
+    .forEach(x=>x.classList.remove('active'));
+
+    el.classList.add('active');
+
+    paymentDipilih = metode;
+
+    document.getElementById(
+    'paymentText').innerText =
+    'Pembayaran : ' + metode;
+}
+
+function checkout(){
+
+    if(diamondDipilih==="" ||
+       paymentDipilih===""){
+
+        alert(
+        "Pilih diamond dan metode pembayaran terlebih dahulu!"
+        );
+
+        return;
+    }
+
+    alert(
+`Pesanan berhasil dibuat!
+
+Game: Mobile Legends
+Diamond: ${diamondDipilih}
+Harga: ${hargaDipilih}
+Pembayaran: ${paymentDipilih}`
+    );
+}
+
+</script>
+
+</body>
+</html>
